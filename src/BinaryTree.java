@@ -5,6 +5,11 @@ public class BinaryTree {
 	public BinaryTree(){
 		size = 0;
 	}
+	
+	public void printTree(){
+		root.printTree();
+	}
+	
 	public void add(int data){
 		try {
 			root = insert(root, new TreeNode(data));
@@ -22,7 +27,7 @@ public class BinaryTree {
 		}else if(current.getData() > newNode.getData()){
 			current.setLeft(insert(current.getLeft(), newNode));
 		}else if(current.getData() < newNode.getData()){
-			current.setLeft(insert(current.getRight(), newNode));
+			current.setRight(insert(current.getRight(), newNode));
 		}
 		return current;
 	}
@@ -42,10 +47,18 @@ public class BinaryTree {
 		
 	}
 	
-	private void inOrder(TreeNode current){
-		inOrder(current.getLeft());
-		System.out.println(current.getData());
-		inOrder(current.getRight());
+	public void inOrder(TreeNode current){
+		if(current == null){
+			inOrder(root);
+		}else{
+			if(current.getLeft()!=null){				
+				inOrder(current.getLeft());
+			}
+			System.out.println(current.getData());
+			if(current.getRight()!=null){				
+				inOrder(current.getRight());	
+			}
+		}
 	}
 	/**
 	 * Finds the parent TreeNode node for the child. Starts with the current.
