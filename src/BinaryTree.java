@@ -43,17 +43,32 @@ public class BinaryTree {
 	}
 	
 	private void inOrder(TreeNode current){
-		
+		inOrder(current.getLeft());
+		System.out.println(current.getData());
+		inOrder(current.getRight());
 	}
+	/**
+	 * Finds the parent TreeNode node for the child. Starts with the current.
+	 * 
+	 * @param current
+	 * @param child
+	 * @return returns the parent TreeNode. Returns null if the node has no parents or is not found in the tree. 
+	 */
 	private TreeNode findParent(TreeNode current, TreeNode child){
 		if(current == null){
 			return null;	
-		}else if(current.getData() == child.getData()){
-			return current;
 		}else if(current.getData() > child.getData()){
-			return findParent(current.getLeft(), child);
+			if(current.getLeft()==child){
+				return current;
+			}else{				
+				return findParent(current.getLeft(), child);
+			}
 		}else if(current.getData() < child.getData()){
-			return findParent(current.getRight(), child);
+			if(current.getRight()==child){
+				return current;
+			}else{				
+				return findParent(current.getRight(), child);
+			}
 		}
 		return null;
 	}
@@ -66,12 +81,13 @@ public class BinaryTree {
 	}
 	
 	private TreeNode remove(TreeNode current, int dataToRemove){	
-		if(current.getData() == dataToRemove){
-			TreeNode successor = findSuccessor(current);
-			findParent(root, successor).setLeft(null);
-			current.setData(successor.getData());
-		}
+			TreeNode nodeToRemoveDataFrom = find(current, dataToRemove);
+			TreeNode successor = findSuccessor(nodeToRemoveDataFrom);
+			findParent(current, successor).setLeft(null);
+			nodeToRemoveDataFrom.setData(successor.getData());
+			return nodeToRemoveDataFrom;
 	}
+	
 	private TreeNode findSuccessor(TreeNode current){
 		if(current == null){	
 		}else if(current.getRight() != null){
@@ -79,6 +95,7 @@ public class BinaryTree {
 		}
 		return current;
 	}
+	
 	private TreeNode getMinimum(TreeNode current){
 		if(current.getLeft() != null){
 			return getMinimum(current.getLeft());

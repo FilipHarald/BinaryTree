@@ -30,5 +30,20 @@ public class TreeNode {
 	public TreeNode getRight(){
 		return right;
 	}
+	
+	public void printTree(){
+		if (this.right != null){
+			right.printTree(true, "");
+		}
+		printNodeValue();
+		if (this.left != null){
+			left.printTree(true, "");
+		}
+	}
+	private void printTree(boolean isRight, String indent){
+		if(right != null){
+			right.printTree(true, indent + (isRight ? "      "));
+		}
+	}
 
 }
