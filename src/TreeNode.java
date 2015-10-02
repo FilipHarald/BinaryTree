@@ -2,9 +2,27 @@ public class TreeNode {
 	private int data;
 	private TreeNode left;
 	private TreeNode right;
+	private int height;
 	
+
 	public TreeNode(int data){
 		this.data = data;
+	}
+	
+	public TreeNode(int data, int height){
+		this.data = data;
+		this.height = height;
+	}
+	public int getHeight() {
+		return height;
+	}
+	
+	public void incHeight(){
+		height++;
+	}
+	
+	public void decHeight(){
+		height--;
 	}
 	
 	public void setData(int data) {

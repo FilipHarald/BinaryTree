@@ -1,7 +1,11 @@
 public class BinaryTree {
-	private TreeNode root;
-	private int size;
+	protected TreeNode root;
+	protected int size;
 	
+	public int getSize() {
+		return size;
+	}
+
 	public BinaryTree(){
 		size = 0;
 	}
@@ -67,7 +71,7 @@ public class BinaryTree {
 	 * @param child
 	 * @return returns the parent TreeNode. Returns null if the node has no parents or is not found in the tree. 
 	 */
-	private TreeNode findParent(TreeNode current, TreeNode child){
+	protected TreeNode findParent(TreeNode current, TreeNode child){
 		if(current == null){
 			return null;	
 		}else if(current.getData() > child.getData()){
@@ -90,23 +94,42 @@ public class BinaryTree {
 		TreeNode temp = remove(root, data);
 		if(temp != null){
 			root = temp;
+			size--;
 		}
 	}
 	
-	private TreeNode remove(TreeNode current, int dataToRemove){	
-			TreeNode nodeToRemoveDataFrom = find(current, dataToRemove);
+	private TreeNode remove(TreeNode current, int dataToRemove){
+		TreeNode nodeToRemoveDataFrom = find(current, dataToRemove);
+		if(nodeToRemoveDataFrom != null){
 			TreeNode successor = findSuccessor(nodeToRemoveDataFrom);
-			findParent(current, successor).setLeft(null);
+			TreeNode successorParent = findParent(current, successor);
+			if(successorParent == nodeToRemoveDataFrom){
+				if(nodeToRemoveDataFrom.getData() < successor.getData()){					
+					nodeToRemoveDataFrom.setRight(successor.getRight());
+				}else{
+					nodeToRemoveDataFrom.setRight(successor.getRight());
+					nodeToRemoveDataFrom.setLeft(successor.getLeft());
+				}
+			}else if(successorParent.getLeft() != null){
+				successorParent.setLeft(null);
+			}
 			nodeToRemoveDataFrom.setData(successor.getData());
-			return nodeToRemoveDataFrom;
-	}
-	
-	private TreeNode findSuccessor(TreeNode current){
-		if(current == null){	
-		}else if(current.getRight() != null){
-			return getMinimum(current.getRight());
 		}
 		return current;
+	}
+	
+	protected TreeNode findSuccessor(TreeNode current){
+		TreeNode successor;
+		if(current == null){
+			successor = null;
+		}else if(current.getRight() != null){
+			successor = getMinimum(current.getRight());
+		}else if(current.getLeft() != null){
+			successor = current.getLeft() ;
+		}else{
+			successor = current;
+		}
+		return successor;
 	}
 	
 	private TreeNode getMinimum(TreeNode current){
@@ -116,7 +139,4 @@ public class BinaryTree {
 			return current;
 		}
 	}
-	
-
-
 }
