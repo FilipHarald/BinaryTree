@@ -1,4 +1,9 @@
 
+/**
+ * This is a balanced BinaryTree
+ * @author Filip
+ *
+ */
 public class AVLTree extends BinaryTree {
 
 	/**

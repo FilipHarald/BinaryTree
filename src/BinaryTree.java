@@ -1,3 +1,8 @@
+/**
+ * Binary tree is used for storing objects and has shorter insertion- and extractiontime compared to for example a list.
+ * @author Filip
+ *
+ */
 public class BinaryTree {
 	protected TreeNode root;
 	protected int size;
