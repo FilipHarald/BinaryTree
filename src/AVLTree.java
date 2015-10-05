@@ -1,10 +1,16 @@
 
 public class AVLTree extends BinaryTree {
 
+	/**
+	 * Constructs an AVLTree with the size 0.
+	 */
 	public AVLTree(){
 		super();
 	}
-	@Override
+
+	/* (non-Javadoc)
+	 * @see BinaryTree#add(int)
+	 */
 	public void add(int data){
 		try {
 			root = insert(root, new TreeNode(data));
@@ -14,6 +20,13 @@ public class AVLTree extends BinaryTree {
 		}
 	}
 	
+	/**
+	 * Used by add for recursively adding the newNode. Throws Exception if the value exists in the tree.
+	 * @param current
+	 * @param newNode
+	 * @return The root for the new balanced- tree or subtree.
+	 * @throws Exception
+	 */
 	private TreeNode insert(TreeNode current, TreeNode newNode) throws Exception{
 		if(current == null){
 			current = newNode;
@@ -31,6 +44,11 @@ public class AVLTree extends BinaryTree {
 	}
 	
 
+	/** 
+	 * Used to balance the node so that the two subtrees height won't differ more than 1.
+	 * @param current
+	 * @return The root of the new balanced tree
+	 */
 	private TreeNode balanceNode(TreeNode current) {
 		TreeNode replacingNode = current;
 		if(current.getBalanceFactor() == 2){
@@ -48,6 +66,10 @@ public class AVLTree extends BinaryTree {
 		return replacingNode;
 	}
 
+	/**
+	 * @param current
+	 * @return The replacement of the current node after rotation
+	 */
 	private TreeNode rotateLeft(TreeNode current) {
 		if(current == root){ 
 			root = root.getRight();
@@ -66,6 +88,10 @@ public class AVLTree extends BinaryTree {
 		}
 	}
 
+	/**
+	 * @param current
+	 * @return The replacement of the current node after rotation
+	 */
 	private TreeNode rotateRight(TreeNode current) {
 		if(current == root){
 			root = root.getLeft();
@@ -85,7 +111,9 @@ public class AVLTree extends BinaryTree {
 		
 	}
 	
-	@Override
+	/* (non-Javadoc)
+	 * @see BinaryTree#delete(int)
+	 */
 	public void delete(int data){
 		TreeNode temp = remove(root, data);
 		if(temp != null){
@@ -94,6 +122,12 @@ public class AVLTree extends BinaryTree {
 		}
 	}
 	
+	/**
+	 * Removes the data from the tree with current as root. 
+	 * @param current
+	 * @param dataToRemove
+	 * @return The root for the new balanced- tree or subtree.
+	 */
 	private TreeNode remove(TreeNode current, int dataToRemove){
 		if(current == null){
 		}else if(current.getData() > dataToRemove ){
