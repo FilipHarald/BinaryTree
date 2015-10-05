@@ -71,7 +71,6 @@ public class AVLTree extends BinaryTree {
 			root = root.getLeft();
 			current.setLeft(root.getRight());
 			root.setRight(current);
-			current.setLeft(null);
 			current.setHeight();
 			root.setHeight();
 			return root;
@@ -96,8 +95,6 @@ public class AVLTree extends BinaryTree {
 	}
 	
 	private TreeNode remove(TreeNode current, int dataToRemove){
-		System.out.println("get data " + current.getData());
-		System.out.println("datatoremove  "  + dataToRemove);
 		if(current == null){
 		}else if(current.getData() > dataToRemove ){
 			current.setLeft(remove(current.getLeft(), dataToRemove));
