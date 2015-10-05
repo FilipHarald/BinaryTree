@@ -4,7 +4,7 @@ public class AVLTree extends BinaryTree {
 	public AVLTree(){
 		super();
 	}
-	
+	@Override
 	public void add(int data){
 		try {
 			root = insert(root, new TreeNode(data));
@@ -22,11 +22,10 @@ public class AVLTree extends BinaryTree {
 			throw new Exception();
 		}else if(current.getData() > newNode.getData()){
 			current.setLeft(insert(current.getLeft(), newNode));
-			current.setHeight();
 		}else if(current.getData() < newNode.getData()){
 			current.setRight(insert(current.getRight(), newNode));
-			current.setHeight();
 		}
+		current.setHeight();
 		current = balanceNode(current);
 		return current;
 	}
@@ -86,10 +85,44 @@ public class AVLTree extends BinaryTree {
 		}
 		
 	}
-
+	
 	@Override
-	public void delete(int data) {
-		super.delete(data);
+	public void delete(int data){
+		TreeNode temp = remove(root, data);
+		if(temp != null){
+			root = temp;
+			size--;
+		}
+	}
+	
+	private TreeNode remove(TreeNode current, int dataToRemove){
+		System.out.println("get data " + current.getData());
+		System.out.println("datatoremove  "  + dataToRemove);
+		if(current == null){
+		}else if(current.getData() > dataToRemove ){
+			current.setLeft(remove(current.getLeft(), dataToRemove));
+		}else if(current.getData() < dataToRemove){
+			current.setRight(remove(current.getRight(), dataToRemove));
+		}else if(current.getData() == dataToRemove){
+			TreeNode successor = findSuccessor(current);
+			TreeNode successorParent = findParent(root, successor);
+			if(successor == current){
+				return null;
+			}else if(successorParent == current){
+				if(current.getData() < successor.getData()){	
+					current.setRight(successor.getRight());
+				}else{
+					current.setRight(successor.getRight());
+					current.setLeft(successor.getLeft());
+				}
+			}else if(successorParent.getLeft() != null){
+				successorParent.setLeft(null);
+			}
+			current.setData(successor.getData());
+		}
+		current.setHeight();
+		current = balanceNode(current);
+		return current;
 	}
 
 

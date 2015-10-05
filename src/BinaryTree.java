@@ -72,7 +72,7 @@ public class BinaryTree {
 	 * @return returns the parent TreeNode. Returns null if the node has no parents or is not found in the tree. 
 	 */
 	protected TreeNode findParent(TreeNode current, TreeNode child){
-		if(current == null){
+		if(child == null){
 			return null;	
 		}else if(current.getData() > child.getData()){
 			if(current.getLeft()==child){

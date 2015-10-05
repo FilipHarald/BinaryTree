@@ -32,7 +32,6 @@ public class TreeNode {
 			rightHeight = right.getHeight();
 		}
 		height = leftHeight >= rightHeight ? leftHeight + 1: rightHeight + 1;
-		System.out.println(height);
 	}
 	
 	public int getBalanceFactor(){
