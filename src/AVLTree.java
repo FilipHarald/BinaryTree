@@ -1,6 +1,9 @@
 
 public class AVLTree extends BinaryTree {
-	
+
+	public AVLTree(){
+		super();
+	}
 	
 	public void add(int data){
 		try {
@@ -14,38 +17,80 @@ public class AVLTree extends BinaryTree {
 	private TreeNode insert(TreeNode current, TreeNode newNode) throws Exception{
 		if(current == null){
 			current = newNode;
-			current.incHeight();
+			current.setHeight();
 		}else if(current.getData() == newNode.getData()){
 			throw new Exception();
 		}else if(current.getData() > newNode.getData()){
 			current.setLeft(insert(current.getLeft(), newNode));
-			if(current.getLeft().getHeight() - current.getRight().getHeight() == 2){
-				////////////////
-				current.decHeight();
-			}else{
-				current.incHeight();
-			}
+			current.setHeight();
 		}else if(current.getData() < newNode.getData()){
 			current.setRight(insert(current.getRight(), newNode));
-			if(current.getRight().getHeight() - current.getLeft().getHeight() == 2){
-				//////////////
-				current.decHeight();
-			}else{
-				current.incHeight();
-			}
+			current.setHeight();
 		}
+		current = balanceNode(current);
 		return current;
 	}
 	
 
+	private TreeNode balanceNode(TreeNode current) {
+		TreeNode replacingNode = current;
+		if(current.getBalanceFactor() == 2){
+			if(current.getLeft().getBalanceFactor() == -1){
+				current.setLeft(rotateLeft(current.getLeft()));
+			}
+			replacingNode = rotateRight(current);
+		}else if(current.getBalanceFactor() == -2){
+			if(current.getRight().getBalanceFactor() == 1){
+				current.setRight(rotateRight(current.getRight()));
+			}
+			replacingNode = rotateLeft(current);
+		}
+		
+		return replacingNode;
+	}
+
+	private TreeNode rotateLeft(TreeNode current) {
+		if(current == root){ 
+			root = root.getRight();
+			current.setRight(root.getLeft());
+			root.setLeft(current);
+			current.setHeight();
+			root.setHeight();
+			return root;
+		}else{
+			TreeNode rightC = current.getRight();
+			current.setRight(rightC.getLeft());
+			rightC.setLeft(current);
+			current.setHeight();
+			rightC.setHeight();
+			return rightC;
+		}
+	}
+
+	private TreeNode rotateRight(TreeNode current) {
+		if(current == root){
+			root = root.getLeft();
+			current.setLeft(root.getRight());
+			root.setRight(current);
+			current.setLeft(null);
+			current.setHeight();
+			root.setHeight();
+			return root;
+		}else{
+			TreeNode leftC = current.getLeft();
+			current.setLeft(leftC.getRight());
+			leftC.setRight(current);
+			current.setHeight();
+			leftC.setHeight();
+			return leftC;
+		}
+		
+	}
+
 	@Override
 	public void delete(int data) {
-		// TODO Auto-generated method stub
 		super.delete(data);
 	}
 
-	public AVLTree(){
-		super();
-	}
 
 }

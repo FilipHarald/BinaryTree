@@ -7,6 +7,7 @@ public class TreeNode {
 
 	public TreeNode(int data){
 		this.data = data;
+		height = 0;
 	}
 	
 	public TreeNode(int data, int height){
@@ -17,12 +18,37 @@ public class TreeNode {
 		return height;
 	}
 	
-	public void incHeight(){
-		height++;
+	public void setHeight(){
+		int leftHeight;
+		int rightHeight;
+		if(left == null){
+			leftHeight = 0;
+		}else{
+			leftHeight = left.getHeight();
+		}
+		if(right == null){
+			rightHeight = 0;
+		}else{
+			rightHeight = right.getHeight();
+		}
+		height = leftHeight >= rightHeight ? leftHeight + 1: rightHeight + 1;
+		System.out.println(height);
 	}
 	
-	public void decHeight(){
-		height--;
+	public int getBalanceFactor(){
+		int l;
+		int r;
+		if(left == null){
+			l = 0;
+		}else{
+			l = left.getHeight();
+		}
+		if(right == null){
+			r = 0;
+		}else{
+			r = right.getHeight();
+		}
+			return  l - r;
 	}
 	
 	public void setData(int data) {
