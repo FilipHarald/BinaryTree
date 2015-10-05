@@ -2,18 +2,32 @@ public class BinaryTree {
 	protected TreeNode root;
 	protected int size;
 	
-	public int getSize() {
-		return size;
-	}
-
+	/**
+	 * Constructs a BinaryTree with the size 0.
+	 */
 	public BinaryTree(){
 		size = 0;
 	}
 	
+	/**
+	 * @return The size of the tree.
+	 */
+	public int getSize() {
+		return size;
+	}
+
+	/**
+	 * Prints the tree from the root.
+	 */
 	public void printTree(){
 		root.printTree();
 	}
 	
+	/**
+	 * Adds the specified value to the tree recursively.
+	 * 
+	 * @param data
+	 */
 	public void add(int data){
 		try {
 			root = insert(root, new TreeNode(data));
@@ -23,6 +37,14 @@ public class BinaryTree {
 		}
 	}
 	
+	/**
+	 * Used by add for recursively adding the newNode. Throws Exception if the value exists in the tree.
+	 * 
+	 * @param current
+	 * @param newNode
+	 * @return The root for the new tree or subtree.
+	 * @throws Exception
+	 */
 	private TreeNode insert(TreeNode current, TreeNode newNode) throws Exception{
 		if(current == null){
 			return newNode;
@@ -37,6 +59,13 @@ public class BinaryTree {
 	}
 	
 	
+	/**
+	 * Finds the node with the specified value in the tree with current as root.
+	 * 
+	 * @param current
+	 * @param data
+	 * @return The node containing the specified value
+	 */
 	public TreeNode find(TreeNode current, int data){
 		if(current == null){
 			return null;	
@@ -51,6 +80,10 @@ public class BinaryTree {
 		
 	}
 	
+	/**
+	 * Prints the values of the tree, with current as root, in order.
+	 * @param current
+	 */
 	public void inOrder(TreeNode current){
 		if(current == null){
 			inOrder(root);
@@ -90,6 +123,11 @@ public class BinaryTree {
 		return null;
 	}
 	
+	/**
+	 * Removes the value from the tree, if it exists, recursively.
+	 * 
+	 * @param data
+	 */
 	public void delete(int data){
 		TreeNode temp = remove(root, data);
 		if(temp != null){
@@ -98,6 +136,14 @@ public class BinaryTree {
 		}
 	}
 	
+	
+	/**
+	 * Removes the data from the tree with current as root. 
+	 * 
+	 * @param current
+	 * @param dataToRemove
+	 * @return The root for the new tree or subtree.
+	 */
 	private TreeNode remove(TreeNode current, int dataToRemove){
 		TreeNode nodeToRemoveDataFrom = find(current, dataToRemove);
 		if(nodeToRemoveDataFrom != null){
@@ -118,6 +164,11 @@ public class BinaryTree {
 		return current;
 	}
 	
+	/**
+	 * Finds and returns the successor of the current node.
+	 * @param current
+	 * @return The successor of the current node
+	 */
 	protected TreeNode findSuccessor(TreeNode current){
 		TreeNode successor;
 		if(current == null){
@@ -132,6 +183,11 @@ public class BinaryTree {
 		return successor;
 	}
 	
+	/**
+	 * Returns the minimum value(the leftmost child) of the tree with current as root.
+	 * @param current
+	 * @return The minimum value of the tree with current as root.
+	 */
 	private TreeNode getMinimum(TreeNode current){
 		if(current.getLeft() != null){
 			return getMinimum(current.getLeft());
