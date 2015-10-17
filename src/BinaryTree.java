@@ -151,6 +151,7 @@ public class BinaryTree {
 	 */
 	private TreeNode remove(TreeNode current, int dataToRemove){
 		TreeNode nodeToRemoveDataFrom = find(current, dataToRemove);
+		System.out.println(nodeToRemoveDataFrom.getData());
 		if(nodeToRemoveDataFrom != null){
 			TreeNode successor = findSuccessor(nodeToRemoveDataFrom);
 			TreeNode successorParent = findParent(current, successor);
@@ -166,6 +167,12 @@ public class BinaryTree {
 				}
 			}else if(successorParent.getLeft() != null){
 				successorParent.setLeft(successor.getRight());
+			}else if(successor == nodeToRemoveDataFrom){
+				if(successorParent.getData() > successor.getData()){
+					successorParent.setLeft(null);
+				}else{
+					successorParent.setRight(null);
+				}
 			}
 			nodeToRemoveDataFrom.setData(successor.getData());
 		}
