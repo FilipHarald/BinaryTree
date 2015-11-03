@@ -96,6 +96,7 @@ public class BinaryTree {
 			if(current.getLeft()!=null){				
 				inOrder(current.getLeft());
 			}
+			System.out.println(current.getData());
 			if(current.getRight()!=null){				
 				inOrder(current.getRight());	
 			}
